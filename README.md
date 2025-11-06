@@ -1,5 +1,9 @@
 # Chess Domain Model (TypeScript)
 
+[![Tests](https://github.com/takeru/chess/actions/workflows/test.yml/badge.svg)](https://github.com/takeru/chess/actions/workflows/test.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 完全なチェスゲームのドメインモデルをTypeScriptで実装。あらゆるインターフェイス（CLI、Web、VR等）、あらゆるゲーム管理方式（ローカル、クライアントサーバ、P2P等）に対応できる柔軟な設計。
 
 ## 特徴
@@ -432,12 +436,43 @@ MIT
 
 プルリクエストを歓迎します！
 
+## テスト
+
+このプロジェクトはJestを使用した包括的なテストスイートを備えています。
+
+### テストの実行
+
+```bash
+# すべてのテストを実行
+npm test
+
+# ウォッチモードでテストを実行
+npm run test:watch
+
+# カバレッジレポートを生成
+npm run test:coverage
+```
+
+### テストカバレッジ
+
+- **Statements**: 81.09%
+- **Branches**: 72.66%
+- **Functions**: 79.04%
+- **Lines**: 81.13%
+
+### CI/CD
+
+GitHub Actionsを使用して、すべてのプッシュとプルリクエストで自動的にテストが実行されます。
+- Node.js 18.x と 20.x でテスト
+- カバレッジレポートの自動生成
+- ビルドの検証
+
 ## TODO
 
 - [ ] FEN記法の完全サポート
 - [ ] PGN（Portable Game Notation）のインポート/エクスポート
 - [ ] 3回同形反復の正確な検出
 - [ ] タイムコントロールの完全実装
-- [ ] ユニットテストの追加
+- [x] ユニットテストの追加（110テスト、81%カバレッジ）
 - [ ] より高度なAIプレイヤーの実装例
 - [ ] WebブラウザでのUIサンプル
