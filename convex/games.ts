@@ -122,8 +122,8 @@ export const makeMove = mutation({
     const nextTurn = playerColor === "white" ? "black" : "white";
 
     // Determine game result
-    let gameResult = game.result;
-    let endReason = game.endReason;
+    let gameResult: "in_progress" | "white_win" | "black_win" | "draw" = game.result;
+    let endReason: "checkmate" | "stalemate" | "resignation" | "draw_agreement" | "insufficient_material" | "fifty_move_rule" | "timeout" | undefined = game.endReason;
 
     if (validationResult.isCheckmate) {
       gameResult = playerColor === "white" ? "white_win" : "black_win";
@@ -136,7 +136,7 @@ export const makeMove = mutation({
       const result = getGameResult(validationResult.newFEN!);
       if (result.result !== "in_progress") {
         gameResult = result.result;
-        endReason = result.endReason;
+        endReason = result.endReason as "checkmate" | "stalemate" | "resignation" | "draw_agreement" | "insufficient_material" | "fifty_move_rule" | "timeout" | undefined;
       }
     }
 
