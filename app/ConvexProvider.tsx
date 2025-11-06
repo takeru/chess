@@ -5,7 +5,10 @@ import { ReactNode } from "react";
 
 // Initialize Convex client
 // Note: NEXT_PUBLIC_CONVEX_URL will be set after running `npx convex dev`
-const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+// For build purposes, we provide a placeholder URL if not configured
+const convex = new ConvexReactClient(
+  process.env.NEXT_PUBLIC_CONVEX_URL || "https://placeholder.convex.cloud"
+);
 
 export function ConvexProvider({ children }: { children: ReactNode }) {
   return <BaseConvexProvider client={convex}>{children}</BaseConvexProvider>;
