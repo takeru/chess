@@ -43,13 +43,12 @@ describe('GameState', () => {
       expect(legalMoves.length).toBe(20);
     });
 
-    test.skip('should return empty array when game is over', () => {
-      // TODO: Create proper checkmate position
+    test('should return empty array when game is over', () => {
+      // Checkmate position: Queen mate
       const pieces = [
-        new Piece(PieceType.King, Color.White, { file: 0, rank: 0 }),
-        new Piece(PieceType.Rook, Color.White, { file: 1, rank: 0 }),
-        new Piece(PieceType.King, Color.Black, { file: 7, rank: 7 }),
-        new Piece(PieceType.Queen, Color.Black, { file: 0, rank: 7 }),
+        new Piece(PieceType.King, Color.White, { file: 0, rank: 7 }), // a8
+        new Piece(PieceType.King, Color.Black, { file: 2, rank: 5 }), // c6
+        new Piece(PieceType.Queen, Color.Black, { file: 1, rank: 6 }), // b7
       ];
       const board = new Board(pieces);
       const game = GameState.createCustom(board, Color.White);
@@ -159,18 +158,17 @@ describe('GameState', () => {
       expect(result.isCheck).toBe(true);
     });
 
-    test.skip('should detect checkmate', () => {
-      // TODO: Create proper checkmate position
+    test('should detect checkmate', () => {
+      // Setup: White king a8, black king c6, black queen c7 -> moves to b7 for checkmate
       const pieces = [
-        new Piece(PieceType.King, Color.White, { file: 0, rank: 0 }),
-        new Piece(PieceType.Rook, Color.White, { file: 1, rank: 0 }),
-        new Piece(PieceType.King, Color.Black, { file: 7, rank: 7 }),
-        new Piece(PieceType.Queen, Color.Black, { file: 0, rank: 6 }),
+        new Piece(PieceType.King, Color.White, { file: 0, rank: 7 }), // a8
+        new Piece(PieceType.King, Color.Black, { file: 2, rank: 5 }), // c6
+        new Piece(PieceType.Queen, Color.Black, { file: 2, rank: 6 }), // c7
       ];
       const board = new Board(pieces);
       const game = GameState.createCustom(board, Color.Black);
 
-      const result = game.makeMove({ file: 0, rank: 6 }, { file: 0, rank: 0 }); // Queen delivers checkmate
+      const result = game.makeMove({ file: 2, rank: 6 }, { file: 1, rank: 6 }); // Queen c7 to b7, delivers checkmate
 
       expect(result.success).toBe(true);
       expect(result.isCheckmate).toBe(true);

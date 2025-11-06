@@ -110,13 +110,12 @@ describe('GameRules', () => {
   });
 
   describe('isCheckmate', () => {
-    test.skip('should detect back rank checkmate', () => {
-      // TODO: Create proper checkmate position
+    test('should detect back rank checkmate', () => {
+      // Queen checkmate: White king on a8 (corner), black queen on b7 (checkmate), black king on c6 (support)
       const pieces = [
-        new Piece(PieceType.King, Color.White, { file: 0, rank: 0 }),
-        new Piece(PieceType.Rook, Color.White, { file: 1, rank: 0 }),
-        new Piece(PieceType.King, Color.Black, { file: 7, rank: 7 }),
-        new Piece(PieceType.Queen, Color.Black, { file: 0, rank: 7 }),
+        new Piece(PieceType.King, Color.White, { file: 0, rank: 7 }), // a8
+        new Piece(PieceType.King, Color.Black, { file: 2, rank: 5 }), // c6
+        new Piece(PieceType.Queen, Color.Black, { file: 1, rank: 6 }), // b7
       ];
       const board = new Board(pieces);
 
@@ -296,13 +295,12 @@ describe('GameRules', () => {
       expect(moves.length).toBe(20);
     });
 
-    test.skip('should return empty array when in checkmate', () => {
-      // TODO: Create proper checkmate position
+    test('should return empty array when in checkmate', () => {
+      // Same checkmate position as above
       const pieces = [
-        new Piece(PieceType.King, Color.White, { file: 0, rank: 0 }),
-        new Piece(PieceType.Rook, Color.White, { file: 1, rank: 0 }),
-        new Piece(PieceType.King, Color.Black, { file: 7, rank: 7 }),
-        new Piece(PieceType.Queen, Color.Black, { file: 0, rank: 7 }),
+        new Piece(PieceType.King, Color.White, { file: 0, rank: 7 }), // a8
+        new Piece(PieceType.King, Color.Black, { file: 2, rank: 5 }), // c6
+        new Piece(PieceType.Queen, Color.Black, { file: 1, rank: 6 }), // b7
       ];
       const board = new Board(pieces);
 
