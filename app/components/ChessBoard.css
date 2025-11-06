@@ -1,0 +1,87 @@
+.chess-board-container {
+  display: inline-block;
+  padding: 1rem;
+  background: #2d3436;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.chess-board {
+  display: flex;
+  flex-direction: column;
+  border: 4px solid #0f3460;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chess-rank {
+  display: flex;
+}
+
+.chess-square {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.chess-square.light {
+  background: #f0d9b5;
+}
+
+.chess-square.dark {
+  background: #b58863;
+}
+
+.chess-square:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.chess-square.selected {
+  background: #4ecca3 !important;
+  box-shadow: inset 0 0 0 3px #2ecc71;
+}
+
+.piece {
+  font-size: 48px;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.board-labels {
+  margin-top: 0.5rem;
+}
+
+.file-labels {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.875rem;
+  color: #95a5a6;
+  font-weight: 600;
+}
+
+.file-labels span {
+  width: 64px;
+  text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .chess-square {
+    width: 40px;
+    height: 40px;
+  }
+
+  .piece {
+    font-size: 30px;
+  }
+
+  .file-labels span {
+    width: 40px;
+  }
+}

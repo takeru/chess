@@ -161,6 +161,67 @@ export class Board {
   }
 
   /**
+   * Create a board from FEN notation (position part only)
+   */
+  static fromFEN(fen: string): Board {
+    const pieces: Piece[] = [];
+    const rows = fen.split('/');
+
+    if (rows.length !== 8) {
+      throw new Error('Invalid FEN: must have 8 ranks');
+    }
+
+    for (let rank = 7; rank >= 0; rank--) {
+      let file = 0;
+      const row = rows[7 - rank];
+
+      for (const char of row) {
+        if (char >= '1' && char <= '8') {
+          // Empty squares
+          file += parseInt(char, 10);
+        } else {
+          // Piece
+          const color = char === char.toUpperCase() ? Color.White : Color.Black;
+          const pieceChar = char.toUpperCase();
+          let pieceType: PieceType;
+
+          switch (pieceChar) {
+            case 'K':
+              pieceType = PieceType.King;
+              break;
+            case 'Q':
+              pieceType = PieceType.Queen;
+              break;
+            case 'R':
+              pieceType = PieceType.Rook;
+              break;
+            case 'B':
+              pieceType = PieceType.Bishop;
+              break;
+            case 'N':
+              pieceType = PieceType.Knight;
+              break;
+            case 'P':
+              pieceType = PieceType.Pawn;
+              break;
+            default:
+              throw new Error(`Invalid FEN: unknown piece ${char}`);
+          }
+
+          pieces.push(new Piece(pieceType, color, { file, rank }));
+          file++;
+        }
+      }
+
+      if (file !== 8) {
+        throw new Error(`Invalid FEN: rank ${rank + 1} has wrong number of squares`);
+      }
+    }
+
+    return new Board(pieces);
+  }
+
+  /**
    * Get FEN (Forsyth-Edwards Notation) representation of the board position
    */
   toFEN(): string {
