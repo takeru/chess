@@ -47,6 +47,57 @@ export class GameState {
   }
 
   /**
+   * Create a game state from FEN notation
+   * FEN format: [position] [turn] [castling] [en-passant] [halfmove] [fullmove]
+   * Example: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+   */
+  static fromFEN(fen: string): GameState {
+    const parts = fen.trim().split(/\s+/);
+
+    if (parts.length !== 6) {
+      throw new Error('Invalid FEN: must have 6 parts');
+    }
+
+    const [positionPart, turnPart, castlingPart, enPassantPart, halfMovePart, fullMovePart] = parts;
+
+    // Parse board position
+    const board = Board.fromFEN(positionPart);
+
+    // Parse turn
+    const currentTurn = turnPart === 'w' ? Color.White : Color.Black;
+
+    // Parse en passant target
+    let enPassantTarget: Position | undefined;
+    if (enPassantPart !== '-') {
+      try {
+        enPassantTarget = PositionUtils.fromAlgebraic(enPassantPart);
+      } catch {
+        // Invalid en passant notation, ignore
+      }
+    }
+
+    // Parse half-move clock
+    const halfMoveClock = parseInt(halfMovePart, 10) || 0;
+
+    // Parse full move number
+    const fullMoveNumber = parseInt(fullMovePart, 10) || 1;
+
+    // Note: We don't parse castling rights (KQkq) here because our system
+    // determines castling availability based on piece movement history.
+    // This is a simplification - in a full implementation, we'd need to
+    // track castling rights separately.
+
+    return new GameState(
+      board,
+      currentTurn,
+      [], // moveHistory - not stored in FEN
+      enPassantTarget,
+      halfMoveClock,
+      fullMoveNumber
+    );
+  }
+
+  /**
    * Get all legal moves for the current player
    */
   getLegalMoves(): Move[] {

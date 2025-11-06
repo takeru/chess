@@ -7,7 +7,12 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "echo \"Tests not implemented yet\" && exit 0"
+    "test": "echo \"Tests not implemented yet\" && exit 0",
+    "dev": "next dev",
+    "build:next": "next build",
+    "start": "next start",
+    "convex:dev": "convex dev",
+    "convex:deploy": "convex deploy"
   },
   "keywords": [
     "chess",
@@ -19,6 +24,14 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "convex": "^1.28.2",
+    "next": "^16.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }
