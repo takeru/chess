@@ -8,11 +8,13 @@
     "build": "next build",
     "build:domain": "tsc -p tsconfig.domain.json",
     "watch": "tsc -p tsconfig.domain.json --watch",
-    "test": "echo \"Tests not implemented yet\" && exit 0",
     "dev": "next dev",
     "start": "next start",
     "convex:dev": "convex dev",
-    "convex:deploy": "convex deploy"
+    "convex:deploy": "convex deploy",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "chess",
@@ -23,9 +25,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
     "typescript": "^5.9.3"
   },
   "dependencies": {
