@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch",
+    "build": "next build",
+    "build:domain": "tsc -p tsconfig.domain.json",
+    "watch": "tsc -p tsconfig.domain.json --watch",
     "test": "echo \"Tests not implemented yet\" && exit 0",
     "dev": "next dev",
-    "build:next": "next build",
     "start": "next start",
     "convex:dev": "convex dev",
     "convex:deploy": "convex deploy"
