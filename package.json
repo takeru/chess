@@ -1,0 +1,24 @@
+{
+  "name": "chess-domain-model",
+  "version": "1.0.0",
+  "description": "Complete chess game domain model in TypeScript - flexible for any interface and game management approach",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "echo \"Tests not implemented yet\" && exit 0"
+  },
+  "keywords": [
+    "chess",
+    "domain-model",
+    "typescript",
+    "game"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  }
+}
