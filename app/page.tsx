@@ -1,13 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import { ChessGame } from "./components/ChessGame";
 
+// Disable static generation for this page as it requires client-side Convex connection
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
-  const [gameId, setGameId] = useState<string | null>(null);
+  const [gameId, setGameId] = useState<Id<"games"> | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   const createGame = useMutation(api.games.createGame);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <main>
+        <h1>Chess - Real-time Multiplayer</h1>
+        <div>Loading...</div>
+      </main>
+    );
+  }
 
   const handleCreateGame = async () => {
     try {
