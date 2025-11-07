@@ -60,8 +60,8 @@ export class GameState {
 
     const [positionPart, turnPart, castlingPart, enPassantPart, halfMovePart, fullMovePart] = parts;
 
-    // Parse board position
-    const board = Board.fromFEN(positionPart);
+    // Parse board position with castling rights to properly restore piece movement state
+    const board = Board.fromFEN(positionPart, castlingPart);
 
     // Parse turn
     const currentTurn = turnPart === 'w' ? Color.White : Color.Black;
@@ -81,11 +81,6 @@ export class GameState {
 
     // Parse full move number
     const fullMoveNumber = parseInt(fullMovePart, 10) || 1;
-
-    // Note: We don't parse castling rights (KQkq) here because our system
-    // determines castling availability based on piece movement history.
-    // This is a simplification - in a full implementation, we'd need to
-    // track castling rights separately.
 
     return new GameState(
       board,
@@ -383,8 +378,38 @@ export class GameState {
     const position = this.board.toFEN();
     const turn = this.currentTurn === Color.White ? 'w' : 'b';
 
-    // Castling availability (simplified - would need to track castling rights properly)
-    let castling = '-';
+    // Castling availability - check if kings and rooks have moved
+    let castling = '';
+
+    // White castling
+    const whiteKing = this.board.getPiece({ file: 4, rank: 0 });
+    if (whiteKing && whiteKing.type === PieceType.King && !whiteKing.hasMoved) {
+      const whiteKingsideRook = this.board.getPiece({ file: 7, rank: 0 });
+      if (whiteKingsideRook && whiteKingsideRook.type === PieceType.Rook && !whiteKingsideRook.hasMoved) {
+        castling += 'K';
+      }
+      const whiteQueensideRook = this.board.getPiece({ file: 0, rank: 0 });
+      if (whiteQueensideRook && whiteQueensideRook.type === PieceType.Rook && !whiteQueensideRook.hasMoved) {
+        castling += 'Q';
+      }
+    }
+
+    // Black castling
+    const blackKing = this.board.getPiece({ file: 4, rank: 7 });
+    if (blackKing && blackKing.type === PieceType.King && !blackKing.hasMoved) {
+      const blackKingsideRook = this.board.getPiece({ file: 7, rank: 7 });
+      if (blackKingsideRook && blackKingsideRook.type === PieceType.Rook && !blackKingsideRook.hasMoved) {
+        castling += 'k';
+      }
+      const blackQueensideRook = this.board.getPiece({ file: 0, rank: 7 });
+      if (blackQueensideRook && blackQueensideRook.type === PieceType.Rook && !blackQueensideRook.hasMoved) {
+        castling += 'q';
+      }
+    }
+
+    if (castling === '') {
+      castling = '-';
+    }
 
     // En passant target
     const enPassant = this.enPassantTarget ? PositionUtils.toAlgebraic(this.enPassantTarget) : '-';
