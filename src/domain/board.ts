@@ -162,14 +162,22 @@ export class Board {
 
   /**
    * Create a board from FEN notation (position part only)
+   * @param fen - FEN position string
+   * @param castlingRights - Castling rights string (e.g., "KQkq", "Kq", "-")
    */
-  static fromFEN(fen: string): Board {
+  static fromFEN(fen: string, castlingRights: string = '-'): Board {
     const pieces: Piece[] = [];
     const rows = fen.split('/');
 
     if (rows.length !== 8) {
       throw new Error('Invalid FEN: must have 8 ranks');
     }
+
+    // Parse castling rights to determine which pieces have moved
+    const canWhiteCastleKingside = castlingRights.includes('K');
+    const canWhiteCastleQueenside = castlingRights.includes('Q');
+    const canBlackCastleKingside = castlingRights.includes('k');
+    const canBlackCastleQueenside = castlingRights.includes('q');
 
     for (let rank = 7; rank >= 0; rank--) {
       let file = 0;
@@ -208,7 +216,39 @@ export class Board {
               throw new Error(`Invalid FEN: unknown piece ${char}`);
           }
 
-          pieces.push(new Piece(pieceType, color, { file, rank }));
+          // Determine if piece has moved based on castling rights and position
+          let hasMoved = true; // Default to true (most pieces have moved or can move)
+
+          if (pieceType === PieceType.King) {
+            // King hasn't moved if it's in starting position and can castle
+            if (color === Color.White && file === 4 && rank === 0) {
+              hasMoved = !(canWhiteCastleKingside || canWhiteCastleQueenside);
+            } else if (color === Color.Black && file === 4 && rank === 7) {
+              hasMoved = !(canBlackCastleKingside || canBlackCastleQueenside);
+            }
+          } else if (pieceType === PieceType.Rook) {
+            // Rook hasn't moved if it's in starting position and castling is available
+            if (color === Color.White && rank === 0) {
+              if (file === 7) {
+                hasMoved = !canWhiteCastleKingside;
+              } else if (file === 0) {
+                hasMoved = !canWhiteCastleQueenside;
+              }
+            } else if (color === Color.Black && rank === 7) {
+              if (file === 7) {
+                hasMoved = !canBlackCastleKingside;
+              } else if (file === 0) {
+                hasMoved = !canBlackCastleQueenside;
+              }
+            }
+          } else if (pieceType === PieceType.Pawn) {
+            // Pawns on starting rank haven't moved
+            if ((color === Color.White && rank === 1) || (color === Color.Black && rank === 6)) {
+              hasMoved = false;
+            }
+          }
+
+          pieces.push(new Piece(pieceType, color, { file, rank }, hasMoved));
           file++;
         }
       }
