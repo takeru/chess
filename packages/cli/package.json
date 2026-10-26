@@ -1,0 +1,25 @@
+{
+  "name": "@chess/cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Play chess from the terminal against anyone connected to the chess server",
+  "type": "module",
+  "bin": {
+    "chess": "./dist/chess.js"
+  },
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "build": "esbuild src/main.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/chess.js --banner:js=\"#!/usr/bin/env node\"",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@chess/client": "*",
+    "@chess/engine": "*",
+    "@chess/protocol": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "esbuild": "^0.28.0",
+    "tsx": "^4.20.0"
+  }
+}

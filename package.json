@@ -1,45 +1,33 @@
 {
-  "name": "chess-domain-model",
-  "version": "1.0.0",
-  "description": "Complete chess game domain model in TypeScript - flexible for any interface and game management approach",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "next build",
-    "build:domain": "tsc -p tsconfig.domain.json",
-    "watch": "tsc -p tsconfig.domain.json --watch",
-    "dev": "next dev",
-    "start": "next start",
-    "convex:dev": "convex dev",
-    "convex:deploy": "convex deploy",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
-  },
-  "keywords": [
-    "chess",
-    "domain-model",
-    "typescript",
-    "game"
-  ],
-  "author": "",
+  "name": "chess",
+  "private": true,
+  "description": "API-first chess server on Cloudflare Workers with CLI and Web clients",
   "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/engine",
+    "packages/protocol",
+    "packages/client",
+    "packages/server",
+    "packages/cli",
+    "packages/web"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @chess/web && npm run dev -w @chess/server",
+    "dev:web": "npm run dev -w @chess/web",
+    "build": "npm run build -w @chess/web && npm run build -w @chess/cli",
+    "deploy": "npm run build -w @chess/web && npm run deploy -w @chess/server",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "e2e": "npm run build && node scripts/e2e.mjs",
+    "cli": "npm run start -w @chess/cli --"
+  },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11"
+  },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.10.0",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "jest": "^30.2.0",
-    "ts-jest": "^29.4.5",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "convex": "^1.28.2",
-    "next": "^16.0.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "overrides": {
-    "test-exclude": "^7.0.1"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }

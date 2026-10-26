@@ -1,0 +1,21 @@
+{
+  "name": "@chess/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser client for the chess server",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@chess/client": "*",
+    "@chess/engine": "*",
+    "@chess/protocol": "*"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}
