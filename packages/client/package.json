@@ -1,0 +1,16 @@
+{
+  "name": "@chess/client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript SDK for the chess API (works in browsers, Node.js, Deno, Bun, Workers)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@chess/protocol": "*"
+  }
+}

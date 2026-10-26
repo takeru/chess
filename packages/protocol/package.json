@@ -1,0 +1,13 @@
+{
+  "name": "@chess/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Types for the chess HTTP/WebSocket API, shared by the server and every client",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p ."
+  }
+}

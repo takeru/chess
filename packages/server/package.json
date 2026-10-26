@@ -1,0 +1,22 @@
+{
+  "name": "@chess/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chess game server: Cloudflare Worker + Durable Objects",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chess/engine": "*",
+    "@chess/protocol": "*"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.0",
+    "@cloudflare/workers-types": "^5.20261001.1",
+    "wrangler": "^4.150.0"
+  }
+}

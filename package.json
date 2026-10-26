@@ -1,0 +1,33 @@
+{
+  "name": "chess",
+  "private": true,
+  "description": "API-first chess server on Cloudflare Workers with CLI and Web clients",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/engine",
+    "packages/protocol",
+    "packages/client",
+    "packages/server",
+    "packages/cli",
+    "packages/web"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @chess/web && npm run dev -w @chess/server",
+    "dev:web": "npm run dev -w @chess/web",
+    "build": "npm run build -w @chess/web && npm run build -w @chess/cli",
+    "deploy": "npm run build -w @chess/web && npm run deploy -w @chess/server",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "e2e": "npm run build && node scripts/e2e.mjs",
+    "cli": "npm run start -w @chess/cli --"
+  },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}
